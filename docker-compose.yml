@@ -30,7 +30,9 @@ services:
       dockerfile: Dockerfile
     container_name: ai-test-frontend
     ports:
-      - "3000:80"
+      - "127.0.0.1:3000:80"  # 只绑定到 localhost，外部无法直接访问
+    expose:
+      - "80"
     depends_on:
       - backend
     restart: unless-stopped
