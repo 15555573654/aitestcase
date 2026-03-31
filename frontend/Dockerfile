@@ -12,6 +12,9 @@ RUN npm ci
 # 复制源代码
 COPY . .
 
+# 设置生产环境变量（使用空值，让前端使用相对路径）
+ENV VITE_API_BASE_URL=
+
 # 构建应用
 RUN npm run build
 
