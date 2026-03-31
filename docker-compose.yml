@@ -6,8 +6,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: ai-test-backend
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     environment:
       - APP_NAME=AI Test Platform API
       - APP_ENV=production
