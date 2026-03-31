@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai-test-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=AI Test Platform API
+      - APP_ENV=production
+      - CORS_ORIGINS=["http://localhost:3000"]
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://api.deepseek.com}
+      - LLM_MODEL=${LLM_MODEL:-deepseek-chat}
+      - LLM_TIMEOUT_SECONDS=${LLM_TIMEOUT_SECONDS:-60}
+      - LLM_TEMPERATURE=${LLM_TEMPERATURE:-0.2}
+    volumes:
+      - ./backend/app:/app/app
+    restart: unless-stopped
+    networks:
+      - ai-test-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai-test-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - ai-test-network
+
+networks:
+  ai-test-network:
+    driver: bridge

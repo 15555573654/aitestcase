@@ -1,0 +1,12 @@
+.venv/
+.env
+backend/service-account-key.json
+backend/.env
+__pycache__/
+.DS_Store
+
+frontend/node_modules/
+frontend/dist/
+
+*.pyc
+data/
